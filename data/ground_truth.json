@@ -1,0 +1,1096 @@
+{
+  "meta": {
+    "orders": 609,
+    "gateway_lines": 607,
+    "bank_lines": 47,
+    "batches": 45,
+    "settlement_lag_days": 2
+  },
+  "defect_definitions": {
+    "E01": "Settlement lands T+2, crossing a month boundary",
+    "E02": "Per-order fee rounding does not equal fee on the batch gross",
+    "E03": "Refund netted into the same settlement batch",
+    "E04": "Chargeback debited against an unrelated batch",
+    "E05": "Bank narration with no recoverable UTR",
+    "E06": "Duplicate order row from a retried webhook",
+    "E07": "Variance beyond tolerance, cause unknown",
+    "E08": "Bank credit with no counterparty in either source",
+    "E09": "Two distinct order subsets close to the same credit"
+  },
+  "defect_counts": {
+    "E01": 4,
+    "E02": 26,
+    "E03": 3,
+    "E04": 2,
+    "E05": 5,
+    "E06": 3,
+    "E07": 2,
+    "E08": 2,
+    "E09": 2
+  },
+  "bank_lines": {
+    "bnk_00001": {
+      "settlement_id": "setl_8bqPOuKTJQIruB",
+      "order_ids": [
+        "order_IeyFjdsxlLsmlw",
+        "order_IrUq3DfQJo4Xoc",
+        "order_SclvccS30Y0pnA",
+        "order_TMJMsybsDqSkFR",
+        "order_ceWsxcgPThhBN6",
+        "order_pstJz9G6hjwzej",
+        "order_wABlIeoJmcziOp"
+      ],
+      "credit_paise": 10782648,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00002": {
+      "settlement_id": "setl_47n48tybqUxR8s",
+      "order_ids": [
+        "order_13xQTaNQkmgjVZ",
+        "order_6DNa7r9hzDOTCG",
+        "order_7M91BlE5BmHl6x",
+        "order_CBJUrgVaUO9xkN",
+        "order_PCycAUUX7zO1E0",
+        "order_WpDrkB6cca9W0R",
+        "order_aGpeTlT8UHho4U",
+        "order_eFnm33zM9rBLYT",
+        "order_jdMhTZqtSpd3e0",
+        "order_mc9drujwKPNRsM",
+        "order_oTYfoNKG3I6f6V",
+        "order_tiVcsXs6ARNXwS"
+      ],
+      "credit_paise": 9112210,
+      "defects": [
+        "E03"
+      ],
+      "resolvable": true
+    },
+    "bnk_00003": {
+      "settlement_id": "setl_vL4PL94lXmuEsO",
+      "order_ids": [
+        "order_5Re7rnM5BZZ4OF",
+        "order_5XeMCl6Xhl6OhH",
+        "order_5nhpNAtBjDbO6H",
+        "order_6dcA7nB2Byrurr",
+        "order_BAb8UzolmoXBjT",
+        "order_EW1xhYDMuBgJ3N",
+        "order_WPECQVq6oLtY53",
+        "order_eGXv8La10GppnE",
+        "order_lQft9ndsUnyfrX",
+        "order_qiDwL7G4GyTgVu",
+        "order_uYvkVxyxydobCR"
+      ],
+      "credit_paise": 15620003,
+      "defects": [],
+      "resolvable": true
+    },
+    "bnk_00004": {
+      "settlement_id": "setl_kGs1oOrI8vKgFX",
+      "order_ids": [
+        "order_6sH8jcKSmWUKUC",
+        "order_APZDUtnJG5EJUg",
+        "order_Fi6X3zrPx7TQgj",
+        "order_FzOSK9ocQlJeT5",
+        "order_IjHCMrcon4n721",
+        "order_L2GKGrNXPkR6S7",
+        "order_XuUwt6GmAPm9cV",
+        "order_aerveQ9etPj12O",
+        "order_cVVNawaaF20bNo",
+        "order_nr7X5A4OikMtUk",
+        "order_wsfEQK8iWQ2mWc"
+      ],
+      "credit_paise": 11963936,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00005": {
+      "settlement_id": "setl_mXD9ztH1rv6Mt6",
+      "order_ids": [
+        "order_7F3v2hqo424FLm",
+        "order_9UsXWwF7svPnki",
+        "order_DSIQnout1gqDAi",
+        "order_PtA0mBe0eZiomk",
+        "order_U18xGzJeaMuCzh",
+        "order_Uo2BtcLvab1L9Y",
+        "order_cd8MPDSfsGPLss",
+        "order_j7kRgyynIRSFd8",
+        "order_jpFOAk3llhq2D1",
+        "order_v2R1btIdLIbcQu",
+        "order_yGmKl3kZfddRaP"
+      ],
+      "credit_paise": 7839127,
+      "defects": [],
+      "resolvable": true
+    },
+    "bnk_00006": {
+      "settlement_id": "setl_JCth1HxvAgNPXr",
+      "order_ids": [
+        "order_9Ft7WTus7auGjA",
+        "order_BXDVKMefIWDKbc",
+        "order_CD9DxJnDtb1bOK",
+        "order_CapjFnoGUTovra",
+        "order_DeiHq2kG5sMIrx",
+        "order_E3fGnh3hW7ss08",
+        "order_HidLKSzIYp1YQ6",
+        "order_P7OEGwNUTx7K9R",
+        "order_SBTfrZMHfDzQ2V",
+        "order_Xm7tFZDO4yMqW6",
+        "order_joAKD9LYuSXYCm",
+        "order_kem5H1PPJiYtgk",
+        "order_r1LR8AnoEf5F71",
+        "order_xHOZqueTaxff1C",
+        "order_yAQGSM56jl1BU2"
+      ],
+      "credit_paise": 4453100,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00007": {
+      "settlement_id": "setl_gOPcYMpvoCau4C",
+      "order_ids": [
+        "order_1Uqrz7HLC69UeH",
+        "order_4ZwyzITQNRkev1",
+        "order_Ar7tGL06cvt0OE",
+        "order_BcEIozWuvgvDGO",
+        "order_Orh7xsEUEgZn9z",
+        "order_U4895sOms83vMt",
+        "order_ULchvC8TRgCxen",
+        "order_e68WdpDViDtven",
+        "order_jbQswKciWwc9NF",
+        "order_kUQkkLxHerm5OO",
+        "order_nNgqt1B4typnze",
+        "order_oT5yVNPfHHJ0GC",
+        "order_ppacwWdoQrHL2o",
+        "order_rA1RPVePwP9oJQ",
+        "order_s4T6KEuKLhOXid"
+      ],
+      "credit_paise": 3554936,
+      "defects": [
+        "E05"
+      ],
+      "resolvable": true
+    },
+    "bnk_00008": {
+      "settlement_id": "setl_hLd5wwZgNlCyV4",
+      "order_ids": [
+        "order_1jWhBar5CP9IJv",
+        "order_2ktniNso8MIumc",
+        "order_6TAnyU2H9DEJ58",
+        "order_8nUsAuxhUubWa8",
+        "order_Co0dTdxGYzMQXW",
+        "order_EHrBugFXNAoLeG",
+        "order_FFQDrMja1ndTmM",
+        "order_I5p59OkBptdnNk",
+        "order_MjsmK3R5HmHkgV",
+        "order_UNtzz8yZwo831t",
+        "order_WP3Y5bSeSyECxi",
+        "order_WY187EFXfB0OcC",
+        "order_ZgvAIZDwbhKtCg",
+        "order_cdDQSl1Tpg7pyY",
+        "order_d1uRHivoNYXBzb",
+        "order_igaBjuMbZFIjiq",
+        "order_vRKKoasRZd5TG9",
+        "order_zmv3YLHfgGglZt"
+      ],
+      "credit_paise": 16021313,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00009": {
+      "settlement_id": "setl_KjULLlQfIs7rdx",
+      "order_ids": [
+        "order_7h82WQneEJpa2x",
+        "order_8wDcWXh6ue47I3",
+        "order_EzwbONVKdv7EyD",
+        "order_L5kqLesDpfZe38",
+        "order_P1uuhlTIjIqSEV",
+        "order_TIrgWdJDwNcu5Y",
+        "order_VFS5PoM0dpcW9M",
+        "order_cqmysHgtvO2gKM",
+        "order_dvEU7ExmfnEob2",
+        "order_jMkio7CU7GLFWq",
+        "order_m2510cFy5pD3Tx",
+        "order_oMj3YlA0izzmzl",
+        "order_uY127OzadX4PZ8",
+        "order_vSv7IRDHQLH72d"
+      ],
+      "credit_paise": 5035045,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00010": {
+      "settlement_id": "setl_ZVm6gZ7kssxpip",
+      "order_ids": [
+        "order_3rOtQN223nkifA",
+        "order_F4v7zjZ28H9UR5",
+        "order_FVZQnvbc7WfL45",
+        "order_JOoj3YZSIha0av",
+        "order_Srulab2mhjDpyk",
+        "order_TatCsVbDF5d5U3",
+        "order_W7cIida0KNCdyA",
+        "order_Wq2BfqHTjW8kFZ",
+        "order_WvkxCQOvmKgzhg",
+        "order_cx98V6lVLx3RAl",
+        "order_gsVi7ARXQ7Byy0",
+        "order_i6uaDDOngeqx8a"
+      ],
+      "credit_paise": 12403766,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00011": {
+      "settlement_id": "setl_mxHvO3kCyyvsNV",
+      "order_ids": [
+        "order_31z3DkON1Ar15Y",
+        "order_AVliHhLpf7tAeU",
+        "order_AjburaoRsb98OL",
+        "order_F3DTgsNhHi7GI7",
+        "order_K72BmwpMXmNYQq",
+        "order_K858OTozCx7UkL",
+        "order_RnkxXN57WtCrMA",
+        "order_jatDge0nFxd23I",
+        "order_s9WMhYLjdupbK9"
+      ],
+      "credit_paise": 11287954,
+      "defects": [
+        "E01"
+      ],
+      "resolvable": true
+    },
+    "bnk_00012": {
+      "settlement_id": "setl_O34yIpKxvoKagh",
+      "order_ids": [
+        "order_2T8DEgIB3zj6tW",
+        "order_4SfbtMsIiIGw87",
+        "order_4a3HmXV86blU7c",
+        "order_5o4zE6OYSnZ0B8",
+        "order_5pizuYb3YPiEHR",
+        "order_B9l3rSVjCszGkA",
+        "order_EgB2NR8FrTVPPw",
+        "order_F5ewhFuysv9rBu",
+        "order_G9IPIDzF6XqtUG",
+        "order_MriPfdk7Nl4vXE",
+        "order_OimCtk328TtUJk",
+        "order_OnF8m9vcX1buq9",
+        "order_QJLe52Uc5MpkZs",
+        "order_YaJb8pYjtY7D7r",
+        "order_YhIGDrcZFGbIxP",
+        "order_bTWbP7MQaPsNCo",
+        "order_eGIbblyke6Eezt",
+        "order_mqAZm7229TTS0l",
+        "order_xPKtP8pumwRVNQ"
+      ],
+      "credit_paise": 13650324,
+      "defects": [
+        "E01",
+        "E02",
+        "E05"
+      ],
+      "resolvable": true
+    },
+    "bnk_00013": {
+      "settlement_id": "setl_l7KmtfmUXhTFev",
+      "order_ids": [
+        "order_1cBap3Lo3UDaIR",
+        "order_5hUgK41P6u5Cu6",
+        "order_ChHl0DWw1Dlhgu",
+        "order_FGZOuJVrP8COMb",
+        "order_JaNQhhTgR8kT2N",
+        "order_MHn2IoZWZykuLc",
+        "order_OCJG0WimhTwTjS",
+        "order_Srop7C55gLhMzp",
+        "order_nAKTEkgUXMNotZ",
+        "order_nKugVN6lI5Sx6i",
+        "order_prWKxQTUvIZGXR",
+        "order_somSr4i9imCob5"
+      ],
+      "credit_paise": 3010798,
+      "defects": [
+        "E05",
+        "E09"
+      ],
+      "resolvable": false
+    },
+    "bnk_00014": {
+      "settlement_id": "setl_K9Y0lq8O8KEELE",
+      "order_ids": [
+        "order_1pYjwn5qGR7Og7",
+        "order_AqXiuPFK1OxByH",
+        "order_AztVmDI4eCwswi",
+        "order_H9pTSJEjx9Sa8K",
+        "order_U552lEaNh4JcIm",
+        "order_aYEczAzbhdMhQE",
+        "order_foTfx2TVdTKXVT",
+        "order_irzVHhz5oAWagm",
+        "order_jqnyFaTMtNDnuv",
+        "order_pFx0aZSiXIqdQM",
+        "order_ubdzoQ1XdyVtMy",
+        "order_ycq9SLiiG5gBPU"
+      ],
+      "credit_paise": 3521651,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00015": {
+      "settlement_id": "setl_BVUpzKus5cJiCY",
+      "order_ids": [
+        "order_1pB2Wl5amSGAAZ",
+        "order_CNeqm5kRpCbVS2",
+        "order_CvnlfAGG9LsJuv",
+        "order_F8w0Auop8fKKX2",
+        "order_FjazkdqFx12AUg",
+        "order_GseyO7PyL3vOQO",
+        "order_QxmgHwKxlytEe1",
+        "order_T6g0fKSZg14ZPn",
+        "order_Wk5H92pO8sBAKt",
+        "order_YkalBXYT1vzGSc",
+        "order_Zr7z687uFIuDli",
+        "order_cgb2oaYlUqbD7r",
+        "order_gb2cKHWawDfZbr",
+        "order_kL6cOILfN4ggjG",
+        "order_m0TtNdx2x4TlbS",
+        "order_m6GAEtxiPVpUIE"
+      ],
+      "credit_paise": 13514007,
+      "defects": [
+        "E02",
+        "E03"
+      ],
+      "resolvable": true
+    },
+    "bnk_00016": {
+      "settlement_id": "setl_Qiq9OJkdadigqf",
+      "order_ids": [
+        "order_1w530dKhyXOFfP",
+        "order_3A7H5Dp0nt1FbF",
+        "order_BsECTzxnZopuaJ",
+        "order_C25XQqbdjPF9yt",
+        "order_IeFpHMqlBPCV84",
+        "order_Jr4qTDXJRqHKAL",
+        "order_K2lQfD8MBuTScB",
+        "order_OJArroey2cIHHg",
+        "order_ZE6KWg7ge4u9aL",
+        "order_pIByz3bDKtMZ20",
+        "order_sNfTmyKwLDGXLe",
+        "order_zG7k8TVGL8hzKj",
+        "order_zn7x359NSRTErU"
+      ],
+      "credit_paise": 6461861,
+      "defects": [],
+      "resolvable": true
+    },
+    "bnk_00017": {
+      "settlement_id": "setl_k4UBs7yk1PMNBY",
+      "order_ids": [
+        "order_2V2WaN72dxNCq8",
+        "order_44ukmbamoUyKyU",
+        "order_5LTKI27KWlJozK",
+        "order_8ad3drGL8riYBx",
+        "order_EPi8mFLHbqp0kZ",
+        "order_QOy2QlAbc3cDyR",
+        "order_UtuNLG3iinogzQ",
+        "order_dBePPCXEtbYCzn",
+        "order_dJs4TwigdxFoIE",
+        "order_fDHLfBVurHJysC",
+        "order_iLfTe71I2y4MsY",
+        "order_pSV4FdVJDHmNhZ",
+        "order_qSjomoU3nfkSSj",
+        "order_tLvoGm6nCcit6Q",
+        "order_y8tJwPfZf9ZPAR"
+      ],
+      "credit_paise": 12000038,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00018": {
+      "settlement_id": "setl_7qezEqMyrqEDCy",
+      "order_ids": [
+        "order_1qV7yLN744muK9",
+        "order_CZ9ISyAa7ePU4F",
+        "order_D1yfsyEixKZWko",
+        "order_KKDW1akFnEzfOe",
+        "order_PWBWOE6tF7uyVq",
+        "order_RDDRUPKqPXah8j",
+        "order_Zy4h7FpnwEWYKC",
+        "order_ciFlm6J2Jg8ieU",
+        "order_lk4ZPacYoHnM84",
+        "order_mH26w055WX3I2H",
+        "order_oFnbK6KaEoB9sz",
+        "order_wtnGOa3gx2cKHM",
+        "order_xqTsf80KhCZ3ur",
+        "order_zmonaXFm5cYHBG"
+      ],
+      "credit_paise": 11765318,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00019": {
+      "settlement_id": "setl_C9yM0897PJ4MSU",
+      "order_ids": [
+        "order_6nip3ApeDDKZNK",
+        "order_AB1Rt0B5Bu9GBs",
+        "order_C8Os00UNFFKJux",
+        "order_CANTI9rRwjtKMv",
+        "order_IM55VpLLSNShiO",
+        "order_JGxdRwmEgbQdMh",
+        "order_L1OgNKLkNS9EJg",
+        "order_YUSGfYsAdCIQii",
+        "order_Yqe4nsE6XHA99A",
+        "order_Yx10jQlB8jASb4",
+        "order_ZDYzKwYopHa3MK"
+      ],
+      "credit_paise": 6926085,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00020": {
+      "settlement_id": "setl_41bx77vBAnSUDU",
+      "order_ids": [
+        "order_DbjzxSTdx14VEp",
+        "order_E2HglpsJJYPG0T",
+        "order_Epnv1qv7UZIHQl",
+        "order_HodkYuetwz59Zx",
+        "order_IakWgtMLHrdEmc",
+        "order_NaRpaDHM2IVC8P",
+        "order_Q0JYHbllZtsm0X",
+        "order_Q4qiWDmGMEvh6q",
+        "order_TvU51DdXmZfNRl",
+        "order_W9L6BQvk5o5XyL",
+        "order_Y0wczijkI5ZmrB",
+        "order_af0zF6jJHerAGE",
+        "order_fiscfgvFqBfmVM",
+        "order_fvC9dC3zJFqeUx",
+        "order_gWIeyeqzlv3ATn",
+        "order_p8QmBIIYHwPALm",
+        "order_rKHPtUTkiswAC8",
+        "order_uH9e52yHaWQ2Ew",
+        "order_xopViuCwhEr5Kz"
+      ],
+      "credit_paise": 15700274,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00021": {
+      "settlement_id": "setl_JYfEj4vnd4AIzX",
+      "order_ids": [
+        "order_APg9u2TLGSshER",
+        "order_BUrPS8qO42uL92",
+        "order_Co0dTdxGYzMQXW",
+        "order_Nxg2iBiqdeshLa",
+        "order_OtGDMwwsp1qi9L",
+        "order_UmFC5EjVVUHlmg",
+        "order_exKvKx8HKSnbPq",
+        "order_miK979yQ5kWFRd",
+        "order_p0oelURRxehXY2",
+        "order_pvVnloTjuvO9dU",
+        "order_syhHPZWyK2V3am",
+        "order_twCUAtoGO5CHN6"
+      ],
+      "credit_paise": 2478884,
+      "defects": [
+        "E04"
+      ],
+      "resolvable": true
+    },
+    "bnk_00022": {
+      "settlement_id": "setl_o9gS2KHS8vMpHJ",
+      "order_ids": [
+        "order_4rBPiKl4QSMuqn",
+        "order_7GcKg9dA7ZKamg",
+        "order_8smaU34Poi7D1Y",
+        "order_Cr2r4unOYz1pUE",
+        "order_CuTbbMS0qMbmjT",
+        "order_Exal6jkSWG8iHZ",
+        "order_JmTXg8T5TqN5Yt",
+        "order_MmBHgDdYcoJWDj",
+        "order_NOOOe2tRzQUj1d",
+        "order_PmSHPxTFGFdKxd",
+        "order_iOnT7bN0cXmPTv",
+        "order_mvYdzBKH6qTO8U",
+        "order_oJfIWBbTprsvN0",
+        "order_p94MRidWYOLu5T",
+        "order_q6DAmnGB6KU399",
+        "order_zsGcm73e2JvFQh"
+      ],
+      "credit_paise": 20714917,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00023": {
+      "settlement_id": "setl_VMTONzzsf3bh5u",
+      "order_ids": [
+        "order_00bpYrXSSI0hRn",
+        "order_2Rt6qcloHisuiE",
+        "order_32ETMolOMF6Onb",
+        "order_6SUgIg2VQpwHVw",
+        "order_8O9Wo9KXn2zKUT",
+        "order_8XvNfyayabxRPm",
+        "order_A27TeiorlLlSQL",
+        "order_DTgVFX39demqG4",
+        "order_GFP5DM6NPj01rt",
+        "order_GpHJgzzhLVZVK3",
+        "order_jnzpdygcPw2YKG",
+        "order_q4BwoROUeYwvKN"
+      ],
+      "credit_paise": 8273080,
+      "defects": [
+        "E02",
+        "E06"
+      ],
+      "resolvable": true
+    },
+    "bnk_00024": {
+      "settlement_id": "setl_iFIl1DVW1b4v9H",
+      "order_ids": [
+        "order_1MNg3Vmzzu5aP1",
+        "order_35SynxZ7DCsH3U",
+        "order_4uBYip8bW5NeCW",
+        "order_6eHlCKW8qsBndC",
+        "order_NV0HP4ek7rPqt8",
+        "order_Pb3M3ECmpaqZTW",
+        "order_Q3kmPuS9qLxxmt",
+        "order_T99u6JivXHmQyA",
+        "order_ZVKN9Sqd1wQ5H6",
+        "order_icwmSJqM1PrYI3",
+        "order_j4lxPAvsKjXPKd",
+        "order_oJ0qnJaK8Lmyfr"
+      ],
+      "credit_paise": 10650010,
+      "defects": [],
+      "resolvable": true
+    },
+    "bnk_00025": {
+      "settlement_id": "setl_O3kCmBAPfKY99s",
+      "order_ids": [
+        "order_ECpR5uUyHwOD0B",
+        "order_EFf1sMXCWqfXk9",
+        "order_EPSHHDDF77gJwV",
+        "order_I7na4hlYs7haAo",
+        "order_MUsnGIqWVKUUg5",
+        "order_OXRXUZtP8jybPr",
+        "order_mM8ufrxTCMdnKN"
+      ],
+      "credit_paise": 2513559,
+      "defects": [
+        "E07"
+      ],
+      "resolvable": false
+    },
+    "bnk_00026": {
+      "settlement_id": "setl_LEt5ia5SDkxi2R",
+      "order_ids": [
+        "order_330WAnsBYqrL5x",
+        "order_VQIPTFQKjHJjTP",
+        "order_d5fJyI3V22uybn",
+        "order_eEevhJSZ8a5HPc",
+        "order_iw5YHL6ULFU09p",
+        "order_jSg0TTDTlxlTKd"
+      ],
+      "credit_paise": 3274149,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00027": {
+      "settlement_id": "setl_2La2f7dvPu8Jms",
+      "order_ids": [
+        "order_77qQIhyyMukHTU",
+        "order_8Bnhe8djk4XjNv",
+        "order_9A5KAxpopqON0p",
+        "order_E4pqxfQKuIBlPy",
+        "order_FU0Sn5Kw1fmP3s",
+        "order_FkDza8AsMXPsFJ",
+        "order_U5d0RJJhQ4G9V0",
+        "order_Ujao9rItHIHu8Z",
+        "order_XqkHhKac6J9Ltx",
+        "order_YQRvUaoDfoIb6v",
+        "order_eDubl77Az4jMwE",
+        "order_lVEL4qtuS6WCFC",
+        "order_spSpl3HaGDOvgE"
+      ],
+      "credit_paise": 14819550,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00028": {
+      "settlement_id": "setl_qt3o3AD4jWBi0P",
+      "order_ids": [
+        "order_0Y2DYJTMBzbgXw",
+        "order_51PM4isrUiH3GP",
+        "order_5dc4bBD8DaUmVZ",
+        "order_AinlfNTwexUH7c",
+        "order_IsADLX7w3wIObz",
+        "order_MgqKAggoNtYJBJ",
+        "order_azSrqd8vLs8Wh7",
+        "order_bhu4wwRJz7dxG5",
+        "order_clMeOdV6tVwx34",
+        "order_puZHAezSROBDfJ",
+        "order_qjpYbXpsJAGBl4",
+        "order_sooQjTudqWaSaT",
+        "order_sytBpqyaFbjLXD",
+        "order_tDuFUCMvoJLlhA"
+      ],
+      "credit_paise": 11187147,
+      "defects": [],
+      "resolvable": true
+    },
+    "bnk_00029": {
+      "settlement_id": "setl_YQMtv1V80RoB2R",
+      "order_ids": [
+        "order_0ScS1siVflxggp",
+        "order_4oTabu4EXP8nCk",
+        "order_Fcry2OmgxlHfci",
+        "order_HRhFBVrDOWxyQA",
+        "order_HbXXxeAGnYTJGc",
+        "order_QVNY1J5QJCJZDk",
+        "order_S1eXuZoauzcaYp",
+        "order_UfbMZQtRl1lrCA",
+        "order_Uxmk2FIW5M4L8s",
+        "order_W1YmTwqhlwRbu5",
+        "order_X7N6rv3CpPoynU",
+        "order_Y6jTTrEruoGfYr",
+        "order_jvgDiUwGMm859x",
+        "order_moRAhb4cj7xF03",
+        "order_qEl00XEg9daLKo",
+        "order_snSHEperKnFSoT",
+        "order_vXwFadMQkPgi0Z",
+        "order_wmdpi4N7nSlXk3"
+      ],
+      "credit_paise": 14582615,
+      "defects": [],
+      "resolvable": true
+    },
+    "bnk_00030": {
+      "settlement_id": "setl_pU5KBVKQkDg5eT",
+      "order_ids": [
+        "order_3o2ubDnNIyT4jw",
+        "order_6ER5zVGoKWOyjQ",
+        "order_A3ld7iqCj51v8d",
+        "order_EGRQ3t3rImSgwy",
+        "order_MF9KUKuRyQixbo",
+        "order_QBSEDP6LyAYUys",
+        "order_bpuu0dC9PMJENa",
+        "order_fp4YBiLhRNuQ4t",
+        "order_hPLveOuJNJPCaS",
+        "order_myeTY9lisaPj54",
+        "order_pDEdV0fKfw4AAz",
+        "order_tC8iintCDgJpnZ",
+        "order_tcgUDJkCdtZCIA",
+        "order_tgTLiJdUhbOvRq",
+        "order_vcqIhrVPuLMCr1",
+        "order_xpeKskvlxnrlTu"
+      ],
+      "credit_paise": 11228763,
+      "defects": [
+        "E02",
+        "E05"
+      ],
+      "resolvable": true
+    },
+    "bnk_00031": {
+      "settlement_id": "setl_R6FEe29GiXusYN",
+      "order_ids": [
+        "order_7MRzvtCtLBsbiQ",
+        "order_Dq1mbnR0Dix6a9",
+        "order_Gvl5twKRnM4LTk",
+        "order_Pr2mmQc12t66qS",
+        "order_Z2l8qIRo8yfmnG",
+        "order_ZSHlgaFSL9XbZV",
+        "order_cAECNAfdnRind6",
+        "order_eHr8mngVGvsg7K",
+        "order_ebaiesSp6TMeDQ",
+        "order_jyRXUqoBhUnRca",
+        "order_mmMNWhCYA86EBb",
+        "order_nWJPogjdzzKvWb"
+      ],
+      "credit_paise": 5718308,
+      "defects": [
+        "E02",
+        "E03"
+      ],
+      "resolvable": true
+    },
+    "bnk_00032": {
+      "settlement_id": "setl_JRst2gNdpufuGe",
+      "order_ids": [
+        "order_4rOItVIILpXWaC",
+        "order_5eBBwWP2stgp6g",
+        "order_7LWSq0qm86H1PD",
+        "order_AZ4s8DZ2dBiyWi",
+        "order_C4MzlJrV3cLzbW",
+        "order_LZJjSGAGzK4VMT",
+        "order_Qsf1pHdYPkfOhb",
+        "order_RAomWmQbH8eALK",
+        "order_V1eHr5NOBY4LX4",
+        "order_XyPwaNumEZYw2h",
+        "order_aU5Fomvn21N11F",
+        "order_g7vXzrnOAJavff",
+        "order_m88aAaCgNYno1b",
+        "order_mimWOS4axwA4fD",
+        "order_oJXz0NKIPrBKp3",
+        "order_tyqbI8Q1cNsdWa"
+      ],
+      "credit_paise": 13269003,
+      "defects": [],
+      "resolvable": true
+    },
+    "bnk_00033": {
+      "settlement_id": "setl_U181DCB6q4UnNs",
+      "order_ids": [
+        "order_6xNjrPsxf5e4ZE",
+        "order_8eDmfnGcdoS7yt",
+        "order_FHIKR5XQzrFVHU",
+        "order_Nz4mRBqNG2t6d4",
+        "order_PFMUp2vEAW73Tf",
+        "order_hqe7ttyT8s8GtP",
+        "order_ip3djPZ3s39H0B",
+        "order_n1KB63J2qU7gma",
+        "order_omtQ2tofJiW5OJ",
+        "order_pNGk5gLRyW59YU",
+        "order_q9Gayrhvy9IVcM",
+        "order_tCcQLUq4Vc9CvG",
+        "order_yZsThE2hD01pM4"
+      ],
+      "credit_paise": 3743390,
+      "defects": [],
+      "resolvable": true
+    },
+    "bnk_00034": {
+      "settlement_id": "setl_WBf7SXu25Utgxl",
+      "order_ids": [
+        "order_5eglUrSREdQ4CW",
+        "order_E6VdvvBoWfK8IC",
+        "order_FM6vbTcP6vqwgp",
+        "order_LX9JlTEVhgXMi0",
+        "order_U6WxLnzgeh7YAH",
+        "order_ZH6huAvpc5ESGR",
+        "order_fHOoh9NmvK1pi2",
+        "order_fcJuoF2LaE3gq5",
+        "order_flC2KYCV4dwKRG",
+        "order_hViWzkJbAXAy4M",
+        "order_k7vbIEEZwxEXRH",
+        "order_ottuApSaCBxaaB",
+        "order_vJ5moX49KEivWB",
+        "order_wsskpuPlUflLdU",
+        "order_xiB2HBR2TtTXJl"
+      ],
+      "credit_paise": 5795261,
+      "defects": [
+        "E02",
+        "E06"
+      ],
+      "resolvable": true
+    },
+    "bnk_00035": {
+      "settlement_id": "setl_1rTuSqcQD8XyeP",
+      "order_ids": [
+        "order_0aca8U0I3oG6tf",
+        "order_5JgSKYrq3rcQrj",
+        "order_6rF6RMocUcZRT7",
+        "order_EPr6HtnAbPcxXe",
+        "order_JDV230l19YmMg0",
+        "order_OlqruSn0f1huqA",
+        "order_TTbiM00HwYDqQp",
+        "order_YNHYOxTqmTXmpi",
+        "order_jqNDMrmif2nERO",
+        "order_l3xeGKKTDuQzqK",
+        "order_pb5m0s5XkKQgY9",
+        "order_pdoU5tGkwFWQuA",
+        "order_qe7K5Y82JpFyTU"
+      ],
+      "credit_paise": 9772809,
+      "defects": [],
+      "resolvable": true
+    },
+    "bnk_00036": {
+      "settlement_id": "setl_7KSKm5fGsECGNI",
+      "order_ids": [
+        "order_0iItgCpJBg28Tk",
+        "order_4ZHQctQzafrPHO",
+        "order_GumPWBrBtGNEev",
+        "order_IWXrovzZs4OxN3",
+        "order_Va3TIRj1ysZ5Qs",
+        "order_Y1tWyrEh8XmmOp",
+        "order_ZfvmG3lnLhFay0",
+        "order_eBX9kBhawWQY0q",
+        "order_edy4AQ5FxitZb1",
+        "order_fN0mRB88R9kRsX",
+        "order_kbbZsDWJrp3dZg",
+        "order_mImT2wzX3kAiwb",
+        "order_miOum7M8vMrrJm",
+        "order_yL9GzHzNMt8N9a"
+      ],
+      "credit_paise": 10352013,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00037": {
+      "settlement_id": "setl_g75JNtutpqi0pf",
+      "order_ids": [
+        "order_1HMHezP8iaHVS0",
+        "order_4oJUFX2JL2mMNo",
+        "order_hSlC30CMgIAxgy",
+        "order_kcmgxmtE99djNw",
+        "order_vZNeDVHEKh78Fl"
+      ],
+      "credit_paise": 1413829,
+      "defects": [
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00038": {
+      "settlement_id": "setl_B8dxY8chAXhsjD",
+      "order_ids": [
+        "order_4tsmwT0GDfojT3",
+        "order_HaFvg6r1Vfpguf",
+        "order_NsPXC295vXwxXy",
+        "order_P6luf1zuCM18l3",
+        "order_Y6NqYwcsmtPbm6",
+        "order_cUK8T7ZjLYcwpd",
+        "order_ddSvKpfUKCARoO",
+        "order_juEZ7UPa2Jxe5z",
+        "order_oXdDCq6QWdMh1K"
+      ],
+      "credit_paise": 1882745,
+      "defects": [
+        "E05",
+        "E09"
+      ],
+      "resolvable": false
+    },
+    "bnk_00039": {
+      "settlement_id": "setl_vf29C2QEy6iZFW",
+      "order_ids": [
+        "order_6WUdaXCp1oV5Iz",
+        "order_8NqhzpNnjfxLr4",
+        "order_8P1WuHhmNKINX4",
+        "order_99nKvXKcpnWnl7",
+        "order_9ZDQJNARdAFrxS",
+        "order_CxWsWEyT6cSXfB",
+        "order_IDTu6721i98wQs",
+        "order_L0RzwggfZqKn6B",
+        "order_Onz05MJUV5jtun",
+        "order_P3EcfqwyY6fa6X",
+        "order_QvgMJVIJwip8Tb",
+        "order_j1pMKxyhz0JWjL",
+        "order_tjr9FyuBq2RAxs",
+        "order_u0Ko9ZTWGst0aU",
+        "order_vBCL8K2UOieQRt",
+        "order_zxqAcgJgskIvO3"
+      ],
+      "credit_paise": 9198919,
+      "defects": [],
+      "resolvable": true
+    },
+    "bnk_00040": {
+      "settlement_id": "setl_nIJ68elM4LpHJu",
+      "order_ids": [
+        "order_1GqagOfPBzLjDp",
+        "order_7TCUj2GMGfGW5S",
+        "order_F6RDx9TDnxqnaF",
+        "order_LU8f8j9nX29Ipg",
+        "order_M89wOhKFFbitw5",
+        "order_N4SZnwX7Akr2E4",
+        "order_NoET9SaHPD8ERv",
+        "order_OH4chrYH8Gtac5",
+        "order_QcB2qUwaCNaSo8",
+        "order_Qjin3EQLKv8azo",
+        "order_Rx9j6z9Mwsf0ae",
+        "order_TlRF76qZoItEn1",
+        "order_WTAMoMlu2M1Qjl",
+        "order_oWXn6YYIxEcfTX",
+        "order_sVjZryk03w8GGz"
+      ],
+      "credit_paise": 12110670,
+      "defects": [
+        "E02",
+        "E06"
+      ],
+      "resolvable": true
+    },
+    "bnk_00041": {
+      "settlement_id": "setl_jdaru1ht9z5tTc",
+      "order_ids": [
+        "order_0KZU6KGFPvsQri",
+        "order_E6L8tisdljsuZS",
+        "order_F6BJSHDSE1F3ND",
+        "order_Fm5ibqyUjGpsW0",
+        "order_GOJOmaSexv02fz",
+        "order_LDShT0kIkmRUFt",
+        "order_UKqNGADtoAxWS8",
+        "order_XQ0z6prmaywT4s",
+        "order_XjTxM53hbjKPn2",
+        "order_ZUkas81PowxV9h",
+        "order_aT1ONNX1ukz5rK",
+        "order_emtKWqAfSyZDU9",
+        "order_htJM1l6fteCy7W",
+        "order_jcxNxUy4oVOB7h",
+        "order_mRpyS59FXIuTKF",
+        "order_sw0nOWlGIRLjyH"
+      ],
+      "credit_paise": 10829292,
+      "defects": [],
+      "resolvable": true
+    },
+    "bnk_00042": {
+      "settlement_id": "setl_orBAUhDlGPUXh1",
+      "order_ids": [
+        "order_1K1pZn3bprxVZ1",
+        "order_6DFQ0SUYbzQYrt",
+        "order_91PYzS6cE7s4PI",
+        "order_9bRxOZ44ZhmDwm",
+        "order_D55tYioBb8wYpO",
+        "order_HkOqsOgRB5yOaQ",
+        "order_NITisgExcPUGzt",
+        "order_NeSGCzAgEHQXXP",
+        "order_Q9Zq8h5TN4dqxY",
+        "order_Sd9TVflfx8WPJ0",
+        "order_WzgDURRvc7w062",
+        "order_cIj8QLxL2plMA7",
+        "order_chWpotW6vTRzds",
+        "order_e8HZxN35Gt6UIR",
+        "order_h0YR5MfIb24b48",
+        "order_qyNS0ylpPjogVs",
+        "order_szjZdnF2fenlr7",
+        "order_zOz8Gm7dNWha55"
+      ],
+      "credit_paise": 14597735,
+      "defects": [
+        "E01",
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00043": {
+      "settlement_id": "setl_1wht3jNWGGbK5p",
+      "order_ids": [
+        "order_0wAfgNIGNXBItR",
+        "order_FVc7Cv4oQW85B7",
+        "order_Fa0TFx5izerYVR",
+        "order_G1p5tVzXwlZooN",
+        "order_GYP4FazaKIcDji",
+        "order_Ggfiks1T0rmnHH",
+        "order_PO9xpCnhv9dI6l",
+        "order_Q6eAV8ysFGbL0J",
+        "order_QaUnGNxnRSD1AP",
+        "order_SPUHs3sBKIlj4I",
+        "order_UCvPcJAarJ7ytC",
+        "order_gygQTw6qFAbqfP",
+        "order_ixYKTmw7Kr2qBQ",
+        "order_jKI1tF0fu9yaHb",
+        "order_mUqmVKRQpE8qcu",
+        "order_oXgNwPFgfuLBBx",
+        "order_q6eM2ftcCSCEXb",
+        "order_xoi9xDprx3TY6r",
+        "order_zPwik34FOXCfOs"
+      ],
+      "credit_paise": 21488530,
+      "defects": [
+        "E01",
+        "E02"
+      ],
+      "resolvable": true
+    },
+    "bnk_00044": {
+      "settlement_id": "setl_S7XEk0BAQo02pv",
+      "order_ids": [
+        "order_EkRe6X3ImAwDll",
+        "order_EsQGldecxbNSac",
+        "order_Hn5O8Jn8Z1LYNH",
+        "order_JwwWnBFuvvQG0h",
+        "order_LpTytaL37cgsqU",
+        "order_YJXzjVWlWiifXd",
+        "order_fkrGK3rtLBE9ey",
+        "order_gD5i82S971VxSw",
+        "order_hilpjaJVj5eUgh",
+        "order_kL6cOILfN4ggjG",
+        "order_l2TWFo1yBC32uU",
+        "order_nuQIqQzoobmbYR",
+        "order_tgxURJFVuNNd54",
+        "order_wcK556dhMIkDcB"
+      ],
+      "credit_paise": 5732228,
+      "defects": [
+        "E04"
+      ],
+      "resolvable": true
+    },
+    "bnk_00045": {
+      "settlement_id": "setl_YVCImGWGUtJqf8",
+      "order_ids": [
+        "order_2A7wTh8buAuuez",
+        "order_2kgANqevkFuGBw",
+        "order_7cUsdp9fvia6bT",
+        "order_8zdYprqtXgPomo",
+        "order_Dcy7jg5sNgsrkA",
+        "order_HSxe6r1Q2AYAZx",
+        "order_OkCoupUBQcXfsi",
+        "order_Q5sJmWL2SyzA5t",
+        "order_UpVRLrpcLnIX3G",
+        "order_UshksKD4yyClQs",
+        "order_Y9kkFnZ5KL8Nzn",
+        "order_bsMtZ5GINyEEbB",
+        "order_cKVu4cfd0rhiAn",
+        "order_liOPfbwDgNfWZs",
+        "order_qDLPRWcHEfaVxW",
+        "order_qIs1M6MlAOB1pP",
+        "order_qcROnTIxeE0B3h"
+      ],
+      "credit_paise": 20380053,
+      "defects": [
+        "E02",
+        "E07"
+      ],
+      "resolvable": false
+    },
+    "bnk_00046": {
+      "settlement_id": null,
+      "order_ids": [],
+      "credit_paise": 1861318,
+      "defects": [
+        "E08"
+      ],
+      "resolvable": false
+    },
+    "bnk_00047": {
+      "settlement_id": null,
+      "order_ids": [],
+      "credit_paise": 684300,
+      "defects": [
+        "E08"
+      ],
+      "resolvable": false
+    }
+  }
+}
