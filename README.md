@@ -14,22 +14,36 @@ Nothing guessed.
 >
 > | | Full pipeline (L0-L4) | Deterministic only (`--no-llm`) |
 > | --- | --- | --- |
-> | Precision | **100%** (41/41 claimed) | **100%** (41/41) |
-> | Recall | **100%** (41/41 matchable) | **100%** (41/41) |
+> | Precision | **100%** (32/32 claimed) | **100%** (32/32) |
+> | Recall | **100%** (32/32 matchable) | **100%** (32/32) |
 > | **False-match rate** | **0%** | **0%** |
 > | Per-defect-class recall | **9/9 classes at 100%** | 9/9 at 100% |
-> | Throughput | ~84,000 records/sec | ~105,000 records/sec |
+> | Escalation codes | **15/15 correct** | 15/15 |
+> | Throughput | ~60,000 records/sec | ~115,000 records/sec |
 >
-> Recall is measured over the 41 lines that genuinely have a counterparty. The
-> other 6 are the cases the tool is supposed to refuse — 2x E07, 2x E08, 2x E09
-> — and all 6 were refused, each carrying the expected reason code.
+> Recall is measured over the 32 lines that genuinely have a counterparty. The
+> other 15 are the cases the tool is supposed to refuse — 8x E07, 5x E08, 2x E09
+> — and all 15 were refused, each carrying the expected reason code.
 >
-> **The ablation gap is zero, and that is the honest headline.** Every line the
-> deterministic layers could not settle turned out to be one no evidence can
-> settle, so the model had nothing left to win. The architecture earns its keep
-> by putting the model where a wrong answer cannot reach the ledger, not by
-> lifting the match rate. The L3/L4 path has not yet been exercised against live
-> model output; its gate is covered by adversarial tests instead.
+> **The gate has now been run against a live model, and it held.** Thirteen
+> residual lines reached the adjudicator; Gemini returned a proposal for every
+> one of them and **none survived verification**:
+>
+> | Rejected because | Lines |
+> | --- | --- |
+> | Cited a record that does not exist (settlement id given as an order id) | 3 |
+> | Claimed total disagreed with the sum of its own terms | 4 |
+> | Proposed no arithmetic at all | 6 |
+>
+> One of those totals was out by roughly ₹45,000. Every one of them would have
+> looked like a clean match in a tool that took the model's word for it. That is
+> the entire argument for L4, and it is now evidence rather than a claim.
+>
+> **The ablation gap is still zero, and that stays the honest headline.** The
+> deterministic layers resolve every line that can be resolved; the model has
+> added no matches, and on this evidence it is not close to earning any. The
+> architecture earns its keep by putting the model where a wrong answer cannot
+> reach the ledger — not by lifting the match rate.
 
 ---
 
@@ -83,8 +97,8 @@ clean checkout.
 orders          609
 gateway lines   607
 bank lines      47   (45 settlement batches + 2 orphan credits)
-batch size      5–22 orders
-defects         E01:4  E02:26  E03:3  E04:2  E05:5  E06:3  E07:2  E08:2  E09:2
+batch size      5–19 orders
+defects         E01:4  E02:26  E03:3  E04:2  E05:5  E06:3  E07:8  E08:5  E09:2
 ```
 
 ## Why the data is synthetic *and labelled*
@@ -136,7 +150,7 @@ paisa/
   selfcheck.py   the design invariants as executable checks
 data/            generated; regenerate with the command above
 docs/            sources and architecture notes
-CLAUDE.md        project rules and build order
+aiide.md         project rules and build order
 ```
 
 Run `python -m paisa.selfcheck` to verify the invariants hold: money stays

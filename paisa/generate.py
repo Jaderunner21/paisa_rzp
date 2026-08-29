@@ -106,6 +106,7 @@ class Batch:
     settled_on: date
     lines: list[GatewayLine] = field(default_factory=list)
     defects: list[str] = field(default_factory=list)
+    l3_trap: str | None = None   # NEW: marker for forced L3 lines
 
     @property
     def net_paise(self) -> int:
@@ -277,6 +278,27 @@ class Generator:
                 self.orders.append(half)
             b.defects += ["E05", "E09"]
 
+        # ===== NEW: Force L3 calls =====
+        # We create three types of "L3 trap" lines that L1/L2 cannot solve,
+        # ensuring they end up in `solved.unresolved` and thus get sent to L3.
+
+        # Type A: Massive variance (E07) - credit far off from batch net.
+        for b in take(3):
+            b.l3_trap = "variance"
+            b.defects.append("E07")
+
+        # Type B: Impossible subset (E05 + weird credit) - no UTR, credit
+        # unattainable by any subset (we'll add a prime offset).
+        for b in take(3):
+            b.l3_trap = "prime"
+            b.defects.append("E07")   # treat as variance, unresolvable
+
+        # Type C: Orphan with fake UTR (E08) - UTR not in gateway, credit
+        # matches no batch net.
+        for b in take(3):
+            b.l3_trap = "orphan"
+            b.defects.append("E08")
+
     def build_bank(self) -> None:
         """One lump credit per batch, plus the orphan inflows of E08."""
         n = 0
@@ -290,19 +312,48 @@ class Generator:
             else:
                 narration = self.rng.choice(NARRATION_FORMATS).format(utr=b.utr)
 
-            if "E07" in b.defects:
-                # An unexplained shortfall, well beyond any rounding tolerance.
+            if "E07" in b.defects and getattr(b, "l3_trap", None) != "variance":
+                # The original E07 handling (small variance) - keep as is
                 credit -= rupees_to_paise(round(self.rng.uniform(80, 400), 2))
+
+            # ---- NEW: apply L3 traps ----
+            trap = getattr(b, "l3_trap", None)
+            if trap == "variance":
+                # Make the credit WAY off from the batch net (e.g., 50-500 rupees)
+                # L2's anchor check fails (abs(net - credit) > 100 paise)
+                credit += rupees_to_paise(round(self.rng.uniform(5000, 50000), 2))
+                narration = self.rng.choice(NARRATION_FORMATS).format(utr=b.utr)
+            elif trap == "prime":
+                # No UTR, add a 101 paise offset (prime) so no subset closes
+                narration = NARRATION_NO_UTR
+                credit += 101  # unreachable by integer subset sums
+            elif trap == "orphan":
+                # Fake UTR, random credit not matching any batch
+                fake_utr = "".join(self.rng.choices(string.ascii_uppercase + string.digits, k=16))
+                narration = self.rng.choice(NARRATION_FORMATS).format(utr=fake_utr)
+                credit = rupees_to_paise(round(self.rng.uniform(2000, 20000), 2))
 
             txn_id = f"bnk_{n:05d}"
             self.bank.append(BankLine(txn_id, value_date, narration, credit, 0))
-            self.truth[txn_id] = {
-                "settlement_id": b.settlement_id,
-                "order_ids": sorted(set(b.order_ids)),
-                "credit_paise": credit,
-                "defects": sorted(set(b.defects)),
-                "resolvable": "E07" not in b.defects and "E09" not in b.defects,
-            }
+
+            # Truth entry
+            if trap is not None:
+                # Trap lines are exceptions (unresolvable) - no matching batch
+                self.truth[txn_id] = {
+                    "settlement_id": None,
+                    "order_ids": [],
+                    "credit_paise": credit,
+                    "defects": sorted(set(b.defects)),
+                    "resolvable": False,
+                }
+            else:
+                self.truth[txn_id] = {
+                    "settlement_id": b.settlement_id,
+                    "order_ids": sorted(set(b.order_ids)),
+                    "credit_paise": credit,
+                    "defects": sorted(set(b.defects)),
+                    "resolvable": "E07" not in b.defects and "E09" not in b.defects,
+                }
 
         # E08 — credits with no counterparty in either source.
         for _ in range(2):

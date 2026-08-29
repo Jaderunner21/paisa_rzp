@@ -123,8 +123,6 @@ if load_dotenv is not None and ENV_PATH.exists():   # pragma: no cover
     load_dotenv(ENV_PATH)
 
 
-MODEL = "claude-opus-5"
-
 # Every provider call is bounded. A hung connection on line three must not stop
 # lines four onward from being adjudicated.
 REQUEST_TIMEOUT_SECONDS = 60
@@ -143,7 +141,7 @@ OLLAMA_PROBE_TIMEOUT_SECONDS = 1
 # whose counterpart sits outside the tight window.
 CONTEXT_WINDOW_DAYS = 7
 
-# The fixed vocabulary from CLAUDE.md. The schema pins the model to these; a
+# The fixed vocabulary from aiide.md. The schema pins the model to these; a
 # code outside the list cannot come back.
 REASON_CODES = ("E01", "E02", "E03", "E04", "E05",
                 "E06", "E07", "E08", "E09")
@@ -180,7 +178,7 @@ class Proposal:
     terms: tuple[Term, ...]
     claimed_total_paise: int
     explanation: str
-    model: str = MODEL
+    model: str = "unset"      # replaced with the real provider:model
     raw: str = ""                     # the response body, kept for the ledger
 
 

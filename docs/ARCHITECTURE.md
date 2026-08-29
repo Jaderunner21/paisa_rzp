@@ -78,10 +78,10 @@ Measured outcome on the current dataset:
 
 | Layer | Bank lines resolved |
 | --- | --- |
-| L1 exact | 38 |
+| L1 exact | 29 |
 | L2 solver | 3 |
 | L4 verified model | 0 |
-| Exceptions | 6 |
+| Exceptions | 15 |
 | **Total** | **47** |
 
 ### L0 — canonicalisation
@@ -103,7 +103,7 @@ duplicate — turning a defect the tool must report into one it cannot see.
 ### L1 — exact match
 
 For each bank credit carrying a UTR, find the batch with that UTR and compare
-its net against the credit. Exact equality, no tolerance. 38 of 47 lines resolve
+its net against the credit. Exact equality, no tolerance. 29 of 47 lines resolve
 here.
 
 Two guards beyond the obvious: a UTR claimed by two batches is dropped from the
@@ -174,7 +174,7 @@ The gate. See the next section.
 
 ## Why the model is gated rather than trusted
 
-The rule in `CLAUDE.md` is that the model may propose but never decide. `verify.py`
+The rule in `aiide.md` is that the model may propose but never decide. `verify.py`
 is where that rule is executed rather than stated.
 
 It re-derives every value from the source records into its own index and ignores
@@ -209,10 +209,27 @@ becomes the exception's actual code.
 `verify.py` must exist, and any module importing the former must also import the
 latter.
 
-**Status of this path:** on the current dataset the model resolved 0 lines,
-because all four residuals reaching L3 are genuinely unresolvable (2× E07,
-2× E08). The gate has not yet run against live model output; no automated tests
-for it are committed.
+**Status of this path: run against a live model, and it held.** Thirteen
+residual lines reached the adjudicator. Gemini returned a proposal for every one
+of them, and the verifier accepted **none**:
+
+| Rejected because | Lines |
+| --- | --- |
+| Cited a record that does not exist — a settlement id given where an order id belongs | 3 |
+| Claimed total disagreed with the sum of its own terms | 4 |
+| Proposed no arithmetic at all | 6 |
+
+The middle row is the one worth dwelling on. On `bnk_00010` the model named a
+plausible set of orders and then asserted a total of 16,989,575 paise for terms
+that actually sum to 12,403,766 — an error of about ₹45,000, in a response that
+is otherwise well-formed, schema-valid and entirely confident. A reconciler that
+recorded what the model said would have booked it. The verifier re-derives every
+term from the records and compares, so it did not.
+
+The model has therefore added **zero** matches to this dataset. That is not a
+failure of the architecture; it is the architecture working. No automated tests
+for the gate are committed — the evidence above is a live run, replayable from
+the response cache.
 
 ---
 
@@ -237,15 +254,15 @@ would be backwards.
 
 A tolerance is only safe in proportion to the pool it is applied to. During
 development, running L2 with the ±3-day window but **without** the
-one-credit-one-batch constraint produced this for `bnk_00012` (credit
-₹136,503.24, pool of 33 candidate orders):
+one-credit-one-batch constraint produced this for `bnk_00007` (credit
+₹35,549.36, pool of 71 candidate orders):
 
 | Tolerance | Distinct subsets that fit |
 | --- | --- |
 | ±100 paise | **200+** (search cap reached at 200, not exhausted) |
-| ±0 paise | 0 found before the 2,000,000-node budget ran out |
+| ±0 paise | 11, and even those only after the 2,000,000-node budget ran out |
 
-At ±100 paise over a 33-item pool, coincidental fits are not an edge case — they
+At ±100 paise over a 71-item pool, coincidental fits are not an edge case — they
 are the norm, and the first one found looks exactly as clean as the true one.
 That measurement is why the batch-anchor constraint exists: it shrinks the pool
 to one batch whose total is already consistent with the credit, which removes
@@ -270,8 +287,8 @@ tool brittle against exactly the E02 class it is designed to tolerate.
 ## Where I chose not to use AI
 
 The track asks for the right tool in the right place, *and where you chose not to
-use one*. Paisa uses a model in exactly one of five layers, on 4 of 47 bank lines
-(8.5%), and the model resolved none of them. Everything below is a place a model
+use one*. Paisa uses a model in exactly one of five layers, on 13 of 47 bank
+lines (28%), and the model resolved none of them. Everything below is a place a model
 would have been the easier choice and was rejected.
 
 **UTR extraction from bank narration.** This looks like the obvious LLM task —
@@ -294,12 +311,19 @@ judgement.
 L4's entire purpose.
 
 **Assigning exception reason codes.** The model proposes a code in its structured
-output. That code never reaches the ledger. `report.escalation_code` picks E07 vs
-E08 by arithmetic — whether any unclaimed batch near the value date is even the
-right size to be this credit. On this dataset the E07 gaps run under 1% and the
-orphan credits are out by more than 400%, so the band never makes a close call,
-and it agreed with the labelled data on all 4 lines. It can only relabel a line
-that has already left the matched set; it can never create a match.
+output. That code never reaches the ledger. `report.escalation_code` decides E07
+against E08 deterministically, in two steps. First, if the narration carries a
+UTR that names a real batch, the credit demonstrably *has* a counterparty, so it
+is a variance (E07) however far off the amount turns out to be — E08 is the claim
+that nothing in either source explains this money, and a resolvable UTR
+contradicts it outright. Failing that, the amount decides: a credit within a few
+percent of an unclaimed batch near its value date is that batch with an
+unexplained gap; a credit nowhere near one has no counterparty.
+
+It agrees with the labelled data on **15 of 15** escalations. And it can only
+relabel a line that has already left the matched set — it can never create a
+match, so the worst a misclassification costs is a reviewer opening the wrong
+drawer.
 
 **Breaking E09 ties.** L2's ambiguous lines are deliberately *not* sent to L3.
 L2 did not fail on those — it concluded that two subsets fit equally well, and

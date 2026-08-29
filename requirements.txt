@@ -10,7 +10,7 @@ python-dotenv>=1.0.0
 # --- AI providers: install whichever one you intend to use -------------------
 # openai>=1.0.0
 # anthropic>=0.40.0
-# google-generativeai>=0.8.0
+# google-generativeai>=0.8.0   # note: end-of-life; successor is `google-genai`
 # groq>=0.11.0
 
 # Ollama needs no SDK - it is one HTTP call, and urllib covers it.

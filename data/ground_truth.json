@@ -24,27 +24,20 @@
     "E04": 2,
     "E05": 5,
     "E06": 3,
-    "E07": 2,
-    "E08": 2,
+    "E07": 8,
+    "E08": 5,
     "E09": 2
   },
   "bank_lines": {
     "bnk_00001": {
-      "settlement_id": "setl_8bqPOuKTJQIruB",
-      "order_ids": [
-        "order_IeyFjdsxlLsmlw",
-        "order_IrUq3DfQJo4Xoc",
-        "order_SclvccS30Y0pnA",
-        "order_TMJMsybsDqSkFR",
-        "order_ceWsxcgPThhBN6",
-        "order_pstJz9G6hjwzej",
-        "order_wABlIeoJmcziOp"
-      ],
-      "credit_paise": 10782648,
+      "settlement_id": null,
+      "order_ids": [],
+      "credit_paise": 10759977,
       "defects": [
-        "E02"
+        "E02",
+        "E07"
       ],
-      "resolvable": true
+      "resolvable": false
     },
     "bnk_00002": {
       "settlement_id": "setl_47n48tybqUxR8s",
@@ -109,48 +102,23 @@
       "resolvable": true
     },
     "bnk_00005": {
-      "settlement_id": "setl_mXD9ztH1rv6Mt6",
-      "order_ids": [
-        "order_7F3v2hqo424FLm",
-        "order_9UsXWwF7svPnki",
-        "order_DSIQnout1gqDAi",
-        "order_PtA0mBe0eZiomk",
-        "order_U18xGzJeaMuCzh",
-        "order_Uo2BtcLvab1L9Y",
-        "order_cd8MPDSfsGPLss",
-        "order_j7kRgyynIRSFd8",
-        "order_jpFOAk3llhq2D1",
-        "order_v2R1btIdLIbcQu",
-        "order_yGmKl3kZfddRaP"
+      "settlement_id": null,
+      "order_ids": [],
+      "credit_paise": 1880718,
+      "defects": [
+        "E08"
       ],
-      "credit_paise": 7839127,
-      "defects": [],
-      "resolvable": true
+      "resolvable": false
     },
     "bnk_00006": {
-      "settlement_id": "setl_JCth1HxvAgNPXr",
-      "order_ids": [
-        "order_9Ft7WTus7auGjA",
-        "order_BXDVKMefIWDKbc",
-        "order_CD9DxJnDtb1bOK",
-        "order_CapjFnoGUTovra",
-        "order_DeiHq2kG5sMIrx",
-        "order_E3fGnh3hW7ss08",
-        "order_HidLKSzIYp1YQ6",
-        "order_P7OEGwNUTx7K9R",
-        "order_SBTfrZMHfDzQ2V",
-        "order_Xm7tFZDO4yMqW6",
-        "order_joAKD9LYuSXYCm",
-        "order_kem5H1PPJiYtgk",
-        "order_r1LR8AnoEf5F71",
-        "order_xHOZqueTaxff1C",
-        "order_yAQGSM56jl1BU2"
-      ],
-      "credit_paise": 4453100,
+      "settlement_id": null,
+      "order_ids": [],
+      "credit_paise": 1296405,
       "defects": [
-        "E02"
+        "E02",
+        "E08"
       ],
-      "resolvable": true
+      "resolvable": false
     },
     "bnk_00007": {
       "settlement_id": "setl_gOPcYMpvoCau4C",
@@ -178,32 +146,14 @@
       "resolvable": true
     },
     "bnk_00008": {
-      "settlement_id": "setl_hLd5wwZgNlCyV4",
-      "order_ids": [
-        "order_1jWhBar5CP9IJv",
-        "order_2ktniNso8MIumc",
-        "order_6TAnyU2H9DEJ58",
-        "order_8nUsAuxhUubWa8",
-        "order_Co0dTdxGYzMQXW",
-        "order_EHrBugFXNAoLeG",
-        "order_FFQDrMja1ndTmM",
-        "order_I5p59OkBptdnNk",
-        "order_MjsmK3R5HmHkgV",
-        "order_UNtzz8yZwo831t",
-        "order_WP3Y5bSeSyECxi",
-        "order_WY187EFXfB0OcC",
-        "order_ZgvAIZDwbhKtCg",
-        "order_cdDQSl1Tpg7pyY",
-        "order_d1uRHivoNYXBzb",
-        "order_igaBjuMbZFIjiq",
-        "order_vRKKoasRZd5TG9",
-        "order_zmv3YLHfgGglZt"
-      ],
-      "credit_paise": 16021313,
+      "settlement_id": null,
+      "order_ids": [],
+      "credit_paise": 16005353,
       "defects": [
-        "E02"
+        "E02",
+        "E07"
       ],
-      "resolvable": true
+      "resolvable": false
     },
     "bnk_00009": {
       "settlement_id": "setl_KjULLlQfIs7rdx",
@@ -230,45 +180,24 @@
       "resolvable": true
     },
     "bnk_00010": {
-      "settlement_id": "setl_ZVm6gZ7kssxpip",
-      "order_ids": [
-        "order_3rOtQN223nkifA",
-        "order_F4v7zjZ28H9UR5",
-        "order_FVZQnvbc7WfL45",
-        "order_JOoj3YZSIha0av",
-        "order_Srulab2mhjDpyk",
-        "order_TatCsVbDF5d5U3",
-        "order_W7cIida0KNCdyA",
-        "order_Wq2BfqHTjW8kFZ",
-        "order_WvkxCQOvmKgzhg",
-        "order_cx98V6lVLx3RAl",
-        "order_gsVi7ARXQ7Byy0",
-        "order_i6uaDDOngeqx8a"
-      ],
-      "credit_paise": 12403766,
+      "settlement_id": null,
+      "order_ids": [],
+      "credit_paise": 16989575,
       "defects": [
-        "E02"
+        "E02",
+        "E07"
       ],
-      "resolvable": true
+      "resolvable": false
     },
     "bnk_00011": {
-      "settlement_id": "setl_mxHvO3kCyyvsNV",
-      "order_ids": [
-        "order_31z3DkON1Ar15Y",
-        "order_AVliHhLpf7tAeU",
-        "order_AjburaoRsb98OL",
-        "order_F3DTgsNhHi7GI7",
-        "order_K72BmwpMXmNYQq",
-        "order_K858OTozCx7UkL",
-        "order_RnkxXN57WtCrMA",
-        "order_jatDge0nFxd23I",
-        "order_s9WMhYLjdupbK9"
-      ],
-      "credit_paise": 11287954,
+      "settlement_id": null,
+      "order_ids": [],
+      "credit_paise": 13485607,
       "defects": [
-        "E01"
+        "E01",
+        "E07"
       ],
-      "resolvable": true
+      "resolvable": false
     },
     "bnk_00012": {
       "settlement_id": "setl_O34yIpKxvoKagh",
@@ -595,7 +524,7 @@
         "order_OXRXUZtP8jybPr",
         "order_mM8ufrxTCMdnKN"
       ],
-      "credit_paise": 2513559,
+      "credit_paise": 2498768,
       "defects": [
         "E07"
       ],
@@ -663,30 +592,13 @@
       "resolvable": true
     },
     "bnk_00029": {
-      "settlement_id": "setl_YQMtv1V80RoB2R",
-      "order_ids": [
-        "order_0ScS1siVflxggp",
-        "order_4oTabu4EXP8nCk",
-        "order_Fcry2OmgxlHfci",
-        "order_HRhFBVrDOWxyQA",
-        "order_HbXXxeAGnYTJGc",
-        "order_QVNY1J5QJCJZDk",
-        "order_S1eXuZoauzcaYp",
-        "order_UfbMZQtRl1lrCA",
-        "order_Uxmk2FIW5M4L8s",
-        "order_W1YmTwqhlwRbu5",
-        "order_X7N6rv3CpPoynU",
-        "order_Y6jTTrEruoGfYr",
-        "order_jvgDiUwGMm859x",
-        "order_moRAhb4cj7xF03",
-        "order_qEl00XEg9daLKo",
-        "order_snSHEperKnFSoT",
-        "order_vXwFadMQkPgi0Z",
-        "order_wmdpi4N7nSlXk3"
+      "settlement_id": null,
+      "order_ids": [],
+      "credit_paise": 16392331,
+      "defects": [
+        "E07"
       ],
-      "credit_paise": 14582615,
-      "defects": [],
-      "resolvable": true
+      "resolvable": false
     },
     "bnk_00030": {
       "settlement_id": "setl_pU5KBVKQkDg5eT",
@@ -739,28 +651,13 @@
       "resolvable": true
     },
     "bnk_00032": {
-      "settlement_id": "setl_JRst2gNdpufuGe",
-      "order_ids": [
-        "order_4rOItVIILpXWaC",
-        "order_5eBBwWP2stgp6g",
-        "order_7LWSq0qm86H1PD",
-        "order_AZ4s8DZ2dBiyWi",
-        "order_C4MzlJrV3cLzbW",
-        "order_LZJjSGAGzK4VMT",
-        "order_Qsf1pHdYPkfOhb",
-        "order_RAomWmQbH8eALK",
-        "order_V1eHr5NOBY4LX4",
-        "order_XyPwaNumEZYw2h",
-        "order_aU5Fomvn21N11F",
-        "order_g7vXzrnOAJavff",
-        "order_m88aAaCgNYno1b",
-        "order_mimWOS4axwA4fD",
-        "order_oJXz0NKIPrBKp3",
-        "order_tyqbI8Q1cNsdWa"
+      "settlement_id": null,
+      "order_ids": [],
+      "credit_paise": 13255049,
+      "defects": [
+        "E07"
       ],
-      "credit_paise": 13269003,
-      "defects": [],
-      "resolvable": true
+      "resolvable": false
     },
     "bnk_00033": {
       "settlement_id": "setl_U181DCB6q4UnNs",
@@ -993,34 +890,15 @@
       "resolvable": true
     },
     "bnk_00043": {
-      "settlement_id": "setl_1wht3jNWGGbK5p",
-      "order_ids": [
-        "order_0wAfgNIGNXBItR",
-        "order_FVc7Cv4oQW85B7",
-        "order_Fa0TFx5izerYVR",
-        "order_G1p5tVzXwlZooN",
-        "order_GYP4FazaKIcDji",
-        "order_Ggfiks1T0rmnHH",
-        "order_PO9xpCnhv9dI6l",
-        "order_Q6eAV8ysFGbL0J",
-        "order_QaUnGNxnRSD1AP",
-        "order_SPUHs3sBKIlj4I",
-        "order_UCvPcJAarJ7ytC",
-        "order_gygQTw6qFAbqfP",
-        "order_ixYKTmw7Kr2qBQ",
-        "order_jKI1tF0fu9yaHb",
-        "order_mUqmVKRQpE8qcu",
-        "order_oXgNwPFgfuLBBx",
-        "order_q6eM2ftcCSCEXb",
-        "order_xoi9xDprx3TY6r",
-        "order_zPwik34FOXCfOs"
-      ],
-      "credit_paise": 21488530,
+      "settlement_id": null,
+      "order_ids": [],
+      "credit_paise": 1935793,
       "defects": [
         "E01",
-        "E02"
+        "E02",
+        "E08"
       ],
-      "resolvable": true
+      "resolvable": false
     },
     "bnk_00044": {
       "settlement_id": "setl_S7XEk0BAQo02pv",
@@ -1067,7 +945,7 @@
         "order_qIs1M6MlAOB1pP",
         "order_qcROnTIxeE0B3h"
       ],
-      "credit_paise": 20380053,
+      "credit_paise": 20378434,
       "defects": [
         "E02",
         "E07"
@@ -1077,7 +955,7 @@
     "bnk_00046": {
       "settlement_id": null,
       "order_ids": [],
-      "credit_paise": 1861318,
+      "credit_paise": 352003,
       "defects": [
         "E08"
       ],
@@ -1086,7 +964,7 @@
     "bnk_00047": {
       "settlement_id": null,
       "order_ids": [],
-      "credit_paise": 684300,
+      "credit_paise": 1148472,
       "defects": [
         "E08"
       ],

@@ -76,6 +76,15 @@ def escalation_code(data: Dataset, txn_id: str, credit_paise: int,
     matched set either way.
     """
     line = next(b for b in data.bank_lines if b.txn_id == txn_id)
+
+    # A narration whose UTR names a real batch settles the question outright:
+    # the credit has a counterparty, so whatever is wrong with it is a variance
+    # (E07) and not an orphan (E08). E08 is the claim that *nothing* in either
+    # source explains this money, and a resolvable UTR contradicts that however
+    # far off the amount turns out to be.
+    if line.utr is not None and any(s.utr == line.utr for s in data.settlements):
+        return "E07"
+
     gaps = [abs(s.net_paise - credit_paise) for s in data.settlements
             if s.settlement_id not in claimed
             and in_window(s.settled_on, line.value_date, WINDOW_DAYS)]
