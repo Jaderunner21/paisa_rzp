@@ -1,0 +1,567 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paisa - reconciliation report</title>
+<!--
+  One static page over reports/run.json. No build step, no framework, no CSS
+  library, no dependencies, no network requests other than the report itself.
+
+  Browsers block fetch() on file:// URLs, so serve the project root:
+
+      python -m http.server
+
+  then open http://localhost:8000/report.html
+
+  Exceptions are listed before matches on purpose. Six lines need a human; the
+  other forty-one are done. A reconciliation report that opens with its successes
+  buries the only part anyone has to act on.
+
+  Money is integer paise in the report and is formatted here with integer
+  arithmetic only. Parsing paise into a float to divide by 100 would reintroduce
+  at the display layer exactly the imprecision the pipeline avoids everywhere
+  else.
+-->
+<style>
+  /* Light is the base palette. Dark redefines only these tokens, twice: once
+     for the system preference, once for an explicit choice, so the toggle wins
+     in both directions and a page with no data-theme still follows the OS. */
+  :root {
+    color-scheme: light;
+    --ink: #16181d;
+    --ink-2: #5b6472;
+    --ink-3: #697280;
+    --rule: #e4e7ec;
+    --rule-2: #c9cfd8;
+    --bg: #ffffff;
+    --bg-2: #f7f8fa;
+    --flag: #b42318;
+    --flag-bg: #fef3f2;
+    --flag-line: #fcd9d4;
+    --flag-row: #fffcfc;
+  }
+
+  /* Not a channel inversion. On a dark ground the red has to get lighter to
+     stay legible, and the hairlines have to get lighter rather than darker --
+     a rule that reads as a faint line on white becomes invisible on near-black
+     if you simply flip it. */
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --ink: #e7e9ee;
+    --ink-2: #a3acba;
+    --ink-3: #8d97a5;
+    --rule: #272b33;
+    --rule-2: #3b414c;
+    --bg: #131519;
+    --bg-2: #1b1e24;
+    --flag: #ff7a6b;
+    --flag-bg: #2a1512;
+    --flag-line: #5d2721;
+    --flag-row: #1a1518;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --ink: #e7e9ee;
+      --ink-2: #a3acba;
+      --ink-3: #8d97a5;
+      --rule: #272b33;
+      --rule-2: #3b414c;
+      --bg: #131519;
+      --bg-2: #1b1e24;
+      --flag: #ff7a6b;
+      --flag-bg: #2a1512;
+      --flag-line: #5d2721;
+      --flag-row: #1a1518;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0 auto;
+    padding: 3rem 1.5rem 6rem;
+    max-width: 64rem;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin: 0 0 .4rem;
+  }
+  .topbar { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+  .lede { color: var(--ink-2); margin: 0 0 2.5rem; font-size: 1.0625rem; }
+
+  #theme {
+    font: inherit; font-size: .8125rem; color: var(--ink-2);
+    background: var(--bg-2); border: 1px solid var(--rule);
+    border-radius: 4px; padding: .25rem .6rem; cursor: pointer;
+    white-space: nowrap;
+  }
+  #theme:hover { color: var(--ink); border-color: var(--rule-2); }
+  .lede b { color: var(--ink); font-weight: 600; }
+
+  /* --- summary ------------------------------------------------------- */
+
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 0 0 .875rem;
+  }
+  .cell { background: var(--bg); padding: .875rem 1rem; }
+  .cell .v {
+    font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums; line-height: 1.15;
+  }
+  .cell .l {
+    color: var(--ink-3); font-size: .75rem; margin-top: .15rem;
+    text-transform: uppercase; letter-spacing: .04em;
+  }
+  .cell.flagged .v { color: var(--flag); }
+  .cell.quiet .v { font-size: 1.0625rem; font-weight: 500; padding-top: .3rem; }
+
+  .runline {
+    color: var(--ink-3); font-size: .8125rem; margin: 0 0 3rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* --- sections ------------------------------------------------------ */
+
+  section { margin: 0 0 3.5rem; }
+  .head {
+    display: flex; align-items: baseline; gap: .625rem;
+    border-bottom: 2px solid var(--ink); padding-bottom: .5rem; margin-bottom: 0;
+  }
+  .head h2 { font-size: 1.125rem; margin: 0; letter-spacing: -0.01em; }
+  .head .count {
+    font-variant-numeric: tabular-nums; color: var(--ink-2);
+    font-size: .9375rem; font-weight: 500;
+  }
+  .head .hint { margin-left: auto; color: var(--ink-3); font-size: .8125rem; }
+
+  /* --- tables -------------------------------------------------------- */
+
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; }
+  /* The two prose columns carry the content; the id and money columns only need
+     enough room not to wrap. Without this the browser splits width evenly and
+     every sentence breaks across three lines. */
+  table.exc { min-width: 48rem; table-layout: fixed; }
+  table.exc th:nth-child(1), table.exc td:nth-child(1) { width: 6.5rem; }
+  table.exc th:nth-child(2), table.exc td:nth-child(2) { width: 4rem; }
+  table.exc th:nth-child(3), table.exc td:nth-child(3) { width: 7rem; }
+  table.exc th:nth-child(4), table.exc td:nth-child(4) { width: 40%; }
+  table.exc th:nth-child(5), table.exc td:nth-child(5) { width: auto; }
+  table.mat { min-width: 40rem; }
+  th {
+    text-align: left; font-size: .6875rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3);
+    padding: .625rem .75rem; white-space: nowrap;
+    border-bottom: 1px solid var(--rule);
+  }
+  td {
+    padding: .625rem .75rem; font-size: .875rem; vertical-align: top;
+    border-bottom: 1px solid var(--rule);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: var(--bg-2); }
+  th.n, td.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td:first-child, th:first-child { padding-left: .25rem; }
+  td:last-child, th:last-child { padding-right: .25rem; }
+
+  .id {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .8125rem; white-space: nowrap;
+  }
+  .muted { color: var(--ink-2); }
+  .exact { color: var(--ink-3); font-size: .8125rem; }
+
+  .layer {
+    display: inline-block; min-width: 1.75rem; text-align: center;
+    font-size: .75rem; font-weight: 600; color: var(--ink-2);
+    background: var(--bg-2); border: 1px solid var(--rule);
+    border-radius: 3px; padding: .05rem .3rem;
+  }
+
+  .code {
+    display: inline-block; font-weight: 600; font-size: .8125rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    padding: .1rem .4rem; border-radius: 3px;
+    background: var(--bg-2); color: var(--ink-2); border: 1px solid var(--rule);
+  }
+  .code.flag { background: var(--flag-bg); color: var(--flag); border-color: var(--flag-line); }
+
+  .what { font-weight: 500; }
+  .detail { color: var(--ink-2); font-size: .8125rem; margin-top: .1rem; }
+  .action { color: var(--ink); }
+  tr.flagged td { background: var(--flag-row); }
+  tr.flagged:hover td { background: var(--flag-bg); }
+
+  /* --- evidence ------------------------------------------------------ */
+
+  details summary {
+    cursor: pointer; color: var(--ink-2); font-size: .8125rem;
+    list-style: none; display: inline-flex; align-items: center; gap: .3rem;
+    border-bottom: 1px dotted var(--rule-2); padding-bottom: 1px;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::before { content: "+"; font-family: ui-monospace, monospace; color: var(--ink-3); }
+  details[open] summary::before { content: "\2212"; }
+  details summary:hover { color: var(--ink); }
+  details pre {
+    margin: .5rem 0 .25rem; padding: .625rem .75rem;
+    background: var(--bg-2); border: 1px solid var(--rule); border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .75rem; line-height: 1.5; color: var(--ink-2);
+    max-height: 20rem; overflow: auto; white-space: pre-wrap; word-break: break-all;
+  }
+
+  #error {
+    padding: 1rem 1.25rem; border: 1px solid var(--flag-line); background: var(--flag-bg);
+    border-radius: 6px; color: var(--flag);
+  }
+  #error p { margin: 0 0 .5rem; }
+  #error p:last-child { margin: 0; color: var(--ink-2); font-size: .875rem; }
+  #error code {
+    font-family: ui-monospace, monospace; background: var(--bg);
+    border: 1px solid var(--rule); border-radius: 3px; padding: .05rem .3rem;
+  }
+  #error .picker { color: var(--ink); font-size: .875rem; }
+  #error input[type="file"] {
+    font: inherit; font-size: .8125rem; color: var(--ink-2);
+    margin-top: .35rem; display: block; max-width: 100%;
+  }
+  #error input[type="file"]::file-selector-button {
+    font: inherit; font-size: .8125rem; color: var(--ink);
+    background: var(--bg); border: 1px solid var(--rule-2);
+    border-radius: 4px; padding: .25rem .6rem; margin-right: .5rem;
+    cursor: pointer;
+  }
+  #error input[type="file"]::file-selector-button:hover { background: var(--bg-2); }
+</style>
+
+<div class="topbar">
+  <h1>Paisa &mdash; reconciliation report</h1>
+  <button id="theme" type="button">Dark</button>
+</div>
+<p class="lede" id="lede">Loading <code>reports/run.json</code>&hellip;</p>
+
+<div id="error" hidden></div>
+
+<div id="report" hidden>
+  <div class="summary" id="summary"></div>
+  <p class="runline" id="runline"></p>
+
+  <section>
+    <div class="head">
+      <h2>Needs a human</h2><span class="count" id="exccount"></span>
+      <span class="hint">refused rather than guessed</span>
+    </div>
+    <div class="scroll"><table class="exc">
+      <thead><tr>
+        <th>Bank line</th><th>Code</th><th class="n">Credit</th>
+        <th>Why it stopped here</th><th>Suggested action</th>
+      </tr></thead>
+      <tbody id="exceptions"></tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <div class="head">
+      <h2>Proved</h2><span class="count" id="matchcount"></span>
+      <span class="hint">arithmetic closes; expand for the working</span>
+    </div>
+    <div class="scroll"><table class="mat">
+      <thead><tr>
+        <th>Bank line</th><th>Layer</th><th>Settlement</th>
+        <th class="n">Credit</th><th class="n">Variance</th><th>Orders</th>
+      </tr></thead>
+      <tbody id="matches"></tbody>
+    </table></div>
+  </section>
+</div>
+
+<script>
+// The fixed reason codes from CLAUDE.md, with what a reviewer should do next.
+// `escalate` is the project's own classification, not a judgement by this page.
+var CODES = {
+  E01: { text: "Settlement crosses a month boundary",
+         action: "Check the adjacent month's settlement file for the counterpart batch.",
+         escalate: false },
+  E02: { text: "Per-order fee rounding differs from fee on batch gross",
+         action: "No action. Expected paise-level variance from per-order rounding.",
+         escalate: false },
+  E03: { text: "Refund netted into the same batch",
+         action: "Confirm the refund against its original order; the batch net already includes it.",
+         escalate: false },
+  E04: { text: "Chargeback against an unrelated batch",
+         action: "Human review: booked against a batch it does not belong to.",
+         escalate: true },
+  E05: { text: "No recoverable UTR in the narration",
+         action: "Ask the bank for the UTR, or confirm the amount-based match found by L2.",
+         escalate: false },
+  E06: { text: "Duplicate order row from a retried webhook",
+         action: "Human review: de-duplicate the order row in the merchant's book.",
+         escalate: true },
+  E07: { text: "Variance beyond tolerance, cause unknown",
+         action: "Escalate. Request a settlement breakdown from the gateway for this payout.",
+         escalate: true },
+  E08: { text: "Bank credit with no counterparty",
+         action: "Escalate. Identify the remitter; nothing in either source explains this credit.",
+         escalate: true },
+  E09: { text: "Two order subsets both fit this credit",
+         action: "Ambiguous. Get the gateway's own batch composition to break the tie.",
+         escalate: true }
+};
+
+// Integer paise -> rupee string, with Indian digit grouping (lakh/crore).
+// Integer arithmetic only, same policy as paisa/money.py: no float ever touches
+// a money value.
+function rupees(paise) {
+  var sign = paise < 0 ? "-" : "";
+  var p = Math.abs(paise);
+  var whole = String(Math.floor(p / 100));
+  var frac = String(p % 100);
+  if (frac.length < 2) { frac = "0" + frac; }
+  var out;
+  if (whole.length > 3) {
+    var tail = whole.slice(-3);
+    var head = whole.slice(0, -3);
+    var parts = [];
+    while (head.length > 2) { parts.unshift(head.slice(-2)); head = head.slice(0, -2); }
+    if (head.length) { parts.unshift(head); }
+    out = parts.join(",") + "," + tail;
+  } else {
+    out = whole;
+  }
+  return sign + out + "." + frac;
+}
+
+function el(tag, text, cls) {
+  var n = document.createElement(tag);
+  if (text !== undefined && text !== null) { n.textContent = String(text); }
+  if (cls) { n.className = cls; }
+  return n;
+}
+
+function cell(value, label, cls) {
+  var box = el("div", null, "cell" + (cls ? " " + cls : ""));
+  box.appendChild(el("div", value, "v"));
+  box.appendChild(el("div", label, "l"));
+  return box;
+}
+
+function evidence(summaryText, obj) {
+  var d = document.createElement("details");
+  d.appendChild(el("summary", summaryText));
+  d.appendChild(el("pre", JSON.stringify(obj, null, 2)));
+  return d;
+}
+
+function render(report) {
+  var m = report.metrics;
+
+  // Rendering appends, and the file picker can be used more than once, so the
+  // containers are emptied first rather than accumulating a second copy of
+  // every row.
+  ["summary", "exceptions", "matches"].forEach(function (id) {
+    document.getElementById(id).textContent = "";
+  });
+
+  document.getElementById("lede").innerHTML =
+    "<b>" + m.matched + " of " + m.bank_lines + "</b> bank lines proved by arithmetic. " +
+    "<b>" + m.exceptions + "</b> refused and sent to the exception ledger.";
+
+  var s = document.getElementById("summary");
+  s.appendChild(cell(m.matched, "proved"));
+  s.appendChild(cell(m.exceptions, "need a human", m.exceptions ? "flagged" : ""));
+  s.appendChild(cell(m.bank_lines, "bank lines"));
+  s.appendChild(cell(rupees(m.matched_paise), "value proved", "quiet"));
+  s.appendChild(cell(m.wall_clock_ms + " ms", m.records + " records", "quiet"));
+
+  document.getElementById("runline").textContent =
+    "L1 exact " + m.by_layer.L1_exact +
+    "  ·  L2 solver " + m.by_layer.L2_solver +
+    "  ·  L4 verified model " + m.by_layer.L4_verified_model +
+    "  ·  model: " + m.model.proposals_made + " proposed, " +
+    m.model.accepted + " accepted, " + m.model.rejected + " rejected" +
+    (report.meta.llm_enabled ? "" : "  ·  model disabled for this run");
+
+  // --- exceptions first ---------------------------------------------
+  document.getElementById("exccount").textContent = report.exceptions.length;
+  var eb = document.getElementById("exceptions");
+  report.exceptions.forEach(function (row) {
+    var info = CODES[row.code] ||
+      { text: row.detail, action: "Review manually.", escalate: true };
+    var tr = document.createElement("tr");
+    if (info.escalate) { tr.className = "flagged"; }
+
+    tr.appendChild(el("td", row.txn_id, "id"));
+
+    var c = el("td");
+    c.appendChild(el("span", row.code, "code" + (info.escalate ? " flag" : "")));
+    tr.appendChild(c);
+
+    tr.appendChild(el("td", rupees(row.credit_paise), "n"));
+
+    var why = el("td");
+    why.appendChild(el("div", info.text, "what"));
+    // `row.detail` restates the reason code in different words, so it goes into
+    // the evidence rather than onto a second line saying the same thing.
+    why.appendChild(evidence("evidence",
+      { code: row.code, detail: row.detail, resolvable: row.resolvable,
+        evidence: row.evidence }));
+    tr.appendChild(why);
+
+    tr.appendChild(el("td", info.action, "action"));
+    eb.appendChild(tr);
+  });
+
+  // --- matches -------------------------------------------------------
+  document.getElementById("matchcount").textContent = report.matches.length;
+  var mb = document.getElementById("matches");
+  report.matches.forEach(function (row) {
+    var tr = document.createElement("tr");
+    tr.appendChild(el("td", row.txn_id, "id"));
+
+    var l = el("td");
+    var tag = el("span", row.layer, "layer");
+    tag.title = row.basis;
+    l.appendChild(tag);
+    tr.appendChild(l);
+
+    tr.appendChild(el("td", row.settlement_id, "id muted"));
+    tr.appendChild(el("td", rupees(row.credit_paise), "n"));
+
+    // A column of "0.00" is noise. Say "exact" when it is exact, and show the
+    // signed figure only when there is something to look at.
+    tr.appendChild(row.variance_paise === 0
+      ? el("td", "exact", "n exact")
+      : el("td", rupees(row.variance_paise), "n"));
+
+    var o = el("td");
+    o.appendChild(evidence(row.order_ids.length + " orders",
+      { basis: row.basis, evidence: row.evidence, order_ids: row.order_ids }));
+    tr.appendChild(o);
+    mb.appendChild(tr);
+  });
+
+  document.getElementById("report").hidden = false;
+}
+
+function fail(message) {
+  var box = document.getElementById("error");
+  box.hidden = false;
+  box.appendChild(el("p", message));
+
+  // Opening this file by double-clicking gives it a file:// origin, and every
+  // browser treats those as opaque — fetch() of a sibling file is refused
+  // before it is attempted. Nothing here can change that.
+  //
+  // A file the user picks themselves is a different matter: choosing it *is*
+  // the permission grant, so FileReader is allowed where fetch is not. That
+  // makes the page work on a double-click without a server, which is the whole
+  // point of a single static file.
+  var pick = el("p", null, "picker");
+  pick.appendChild(el("span", "Opened directly from disk? Point it at the report: "));
+  var input = document.createElement("input");
+  input.type = "file";
+  input.accept = "application/json,.json";
+  input.id = "picker";
+  input.addEventListener("change", function () {
+    var file = input.files && input.files[0];
+    if (!file) { return; }
+    var reader = new FileReader();
+    reader.onload = function () {
+      var parsed;
+      try {
+        parsed = JSON.parse(reader.result);
+      } catch (e) {
+        box.appendChild(el("p", file.name + " is not valid JSON: " + e.message));
+        return;
+      }
+      if (!parsed || !parsed.metrics || !parsed.matches) {
+        box.appendChild(el("p", file.name + " does not look like a Paisa run "
+          + "report (no metrics/matches). Generate one with: python -m paisa.report"));
+        return;
+      }
+      box.hidden = true;
+      render(parsed);
+    };
+    reader.readAsText(file);
+  });
+  pick.appendChild(input);
+  box.appendChild(pick);
+
+  var hint = el("p");
+  hint.appendChild(el("span", "Or serve the project root — "));
+  hint.appendChild(el("code", "python -m http.server"));
+  hint.appendChild(el("span", " — and open http://localhost:8000/report.html"));
+  box.appendChild(hint);
+  document.getElementById("lede").textContent = "";
+}
+
+// --- theme ----------------------------------------------------------
+// Three states: no attribute means follow the OS, and an explicit choice pins
+// it either way. localStorage is wrapped because it throws in a sandboxed or
+// file:// context, and a report that will not render is worse than one that
+// forgets your preference.
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById("theme");
+  var query = window.matchMedia("(prefers-color-scheme: dark)");
+
+  function stored(key, value) {
+    try {
+      if (value === undefined) { return localStorage.getItem(key); }
+      localStorage.setItem(key, value);
+    } catch (e) { /* private mode, file://, disabled storage */ }
+    return null;
+  }
+
+  function isDark() {
+    var set = root.getAttribute("data-theme");
+    if (set) { return set === "dark"; }
+    return query.matches;
+  }
+
+  function sync() { btn.textContent = isDark() ? "Light" : "Dark"; }
+
+  var saved = stored("paisa-theme");
+  if (saved === "dark" || saved === "light") { root.setAttribute("data-theme", saved); }
+  sync();
+
+  btn.addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    stored("paisa-theme", next);
+    sync();
+  });
+
+  // Follow the OS while no explicit choice is pinned.
+  query.addEventListener("change", function () {
+    if (!root.getAttribute("data-theme")) { sync(); }
+  });
+})();
+
+fetch("reports/run.json")
+  .then(function (r) {
+    if (!r.ok) { throw new Error("reports/run.json returned HTTP " + r.status); }
+    return r.json();
+  })
+  .then(render)
+  .catch(function (err) {
+    fail("Could not load reports/run.json — " + err.message
+         + ". Generate it with: python -m paisa.report");
+  });
+</script>

@@ -1,0 +1,18 @@
+# Paisa has no required runtime dependencies. L0-L2, the verifier, the report
+# and the eval harness are standard library only, and `python -m paisa.evaluate
+# --no-llm` runs on a bare Python 3.11+.
+#
+# Everything below is optional and needed only for the L3 model layer.
+
+# Reads credentials from a local .env. Without it, export the variables yourself.
+python-dotenv>=1.0.0
+
+# --- AI providers: install whichever one you intend to use -------------------
+# openai>=1.0.0
+# anthropic>=0.40.0
+# google-generativeai>=0.8.0
+# groq>=0.11.0
+
+# Ollama needs no SDK - it is one HTTP call, and urllib covers it.
+# `requests` is used instead when present, but is not required.
+# requests>=2.31.0

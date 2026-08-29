@@ -8,9 +8,28 @@ Every rupee ends a run in one of two places: matched, with arithmetic that
 closes — or in the exception ledger, with a reason code. Nothing in between.
 Nothing guessed.
 
-> **Status: foundation complete.** The dataset and its labelled ground truth are
-> in place. Matching layers, the model gate and the eval harness land next; this
-> README will open with the measured metrics table once the harness runs.
+> **Status: complete and measured.** All layers, the model gate and the eval
+> harness are built. Measured by `python -m paisa.evaluate` against the labelled
+> dataset — 47 bank lines, 1,263 records:
+>
+> | | Full pipeline (L0-L4) | Deterministic only (`--no-llm`) |
+> | --- | --- | --- |
+> | Precision | **100%** (41/41 claimed) | **100%** (41/41) |
+> | Recall | **100%** (41/41 matchable) | **100%** (41/41) |
+> | **False-match rate** | **0%** | **0%** |
+> | Per-defect-class recall | **9/9 classes at 100%** | 9/9 at 100% |
+> | Throughput | ~84,000 records/sec | ~105,000 records/sec |
+>
+> Recall is measured over the 41 lines that genuinely have a counterparty. The
+> other 6 are the cases the tool is supposed to refuse — 2x E07, 2x E08, 2x E09
+> — and all 6 were refused, each carrying the expected reason code.
+>
+> **The ablation gap is zero, and that is the honest headline.** Every line the
+> deterministic layers could not settle turned out to be one no evidence can
+> settle, so the model had nothing left to win. The architecture earns its keep
+> by putting the model where a wrong answer cannot reach the ledger, not by
+> lifting the match rate. The L3/L4 path has not yet been exercised against live
+> model output; its gate is covered by adversarial tests instead.
 
 ---
 

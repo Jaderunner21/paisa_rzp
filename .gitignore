@@ -2,6 +2,13 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
-.env
 .DS_Store
 reports/
+
+# Credentials. .env.example is committed; .env never is.
+.env
+
+# Cached model adjudications, keyed by provider + model + prompt. Machine-local
+# and never shared: a cached answer is evidence about one run on one machine,
+# and committing it would let one person's result silently become everyone's.
+.cache/
